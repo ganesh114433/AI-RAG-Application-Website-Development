@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h4 class="mb-0">Document Processing</h4>
+    </div>
+    <div class="card-body">
+        <form id="processForm">
+            <div class="mb-3">
+                <label for="directory" class="form-label">Directory Path</label>
+                <input type="text" class="form-control" id="directory" name="directory" required>
+            </div>
+            <div class="mb-3">
+                <label for="chunkSize" class="form-label">Chunk Size</label>
+                <input type="number" class="form-control" id="chunkSize" name="chunk_size" 
+                       value="5" min="1" max="20">
+            </div>
+            <button type="submit" class="btn btn-primary">Process Documents</button>
+        </form>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h4 class="mb-0">Processed Documents</h4>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Chunks</th>
+                    <th>Processed At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doc in documents %}
+                <tr>
+                    <td>{{ doc.filename }}</td>
+                    <td>{{ doc.chunk_count }}</td>
+                    <td>{{ doc.processed_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('processForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    
+    try {
+        const response = await fetch('/admin/process', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        if (response.ok) {
+            alert('Processing complete');
+            location.reload();
+        } else {
+            alert(data.error || 'Processing failed');
+        }
+    } catch (err) {
+        alert('Error processing documents');
+    }
+});
+</script>
+{% endblock %}

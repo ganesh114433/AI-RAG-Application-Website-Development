@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center align-items-center min-vh-75">
+        <div class="col-md-8 text-center">
+            <h1 class="display-4 mb-4">Welcome to RAG Chat</h1>
+            <p class="lead mb-4">
+                Ask questions and get accurate answers with citations from our knowledge base.
+            </p>
+            
+            {% if current_user.is_authenticated %}
+            <div class="mb-4">
+                <h5>Your Usage</h5>
+                <p>
+                    Questions Asked: {{ current_user.questions_asked }} / 
+                    {% if current_user.is_paid %}
+                        {{ config['PAID_QUOTA'] }} (Paid Plan)
+                    {% else %}
+                        {{ config['FREE_QUOTA'] }} (Free Plan)
+                    {% endif %}
+                </p>
+            </div>
+            
+            <a href="{{ url_for('chat.index') }}" class="btn btn-primary btn-lg mb-3">
+                Start Chatting
+            </a>
+            {% else %}
+            <div class="row justify-content-center mb-4">
+                <div class="col-md-6">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">Free Plan</h5>
+                            <p class="card-text">
+                                Start with {{ config['FREE_QUOTA'] }} free questions
+                            </p>
+                            <a href="{{ url_for('auth.register') }}" class="btn btn-outline-primary">
+                                Sign Up Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">Paid Plan</h5>
+                            <p class="card-text">
+                                Get {{ config['PAID_QUOTA'] }} questions per month
+                            </p>
+                            <a href="{{ url_for('auth.register') }}" class="btn btn-primary">
+                                Get Started
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

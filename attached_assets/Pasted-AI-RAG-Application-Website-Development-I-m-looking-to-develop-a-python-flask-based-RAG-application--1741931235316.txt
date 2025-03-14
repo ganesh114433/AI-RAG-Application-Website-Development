@@ -1,0 +1,26 @@
+AI RAG Application Website Development
+
+I'm looking to develop a python flask based RAG application website designed for AI LLM. The core function of this application will be question answering similar to ChatGPT.com (and Stack-ai.com UI mentioned below)
+
+Key Features:
+- A web-based GUI, as opposed to a command-line interface or just an API. This GUI should be user-friendly and intuitive, allowing users to easily navigate through the application.
+- A website functionality very similar to ChatGPT.com including the UI and message boxes etc
+- 5 free questions for unregistered users
+- paid users get xx questions per month (value changable by me in the script)
+- a good modern slick polished UI using any tech stack
+- I have plain text files, which need to be chunked and uploaded to Zilliz or Qdant (you can either install it on my VPS or use cloud). Need a python script where i have a placeholder to input the folder path and the script must get all text files in it (including subdirectories) and chunk it according to the given number of sentences (example every 5 sentences = 1 chunk) + option to chunk by /n/n paragraph (according to the plain text file i choose) and embed using Google multilingual 002 (latest)
+- also for Hybrid search need sparse vector embeddings
+- file metadata should also be uploaded
+-- the website UI will have a few small modifications which will be talked about in private chat with me.
+
+Process flow: user asks question --> uses LLM 1 (google flash 2) to paraphrase (according to my prompt) ---> gets retrieved chunks from vector DB hybrid search (uses metadata filtering based on user question decided by Instruction prompt) ----> uses google ReRanker ----> sends everything to LLM2 (google flash 2 or google gemini 2 pro) to generate answer (according to system prompt) ---> displays the answer to the user.
+
+- You can use Google Vertex or Google RAG engine (if Gemini 2.0 models are available - please make sure beforehand)
+- i already have domain name and VPS ready with python installed and tested a sample flask app which works.
+-- Server is Cloudlinux 8 with Cpanel and WHM.
+
+--- It's up to you if you want to use AI tools to generate the code for this project but the final website must be in fully working condition.
+
+--- you can demonstrate the final thing with a sample text file and i will try it myself once it is ready.
+
+***** NO FINETUNING OR TRAINING ETC of models wanted******
